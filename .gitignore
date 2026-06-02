@@ -213,3 +213,12 @@ SenseNova*
 
 temp
 result*
+
+
+outputs*
+
+# Local dev cruft, not part of the release
+bagel_mot_start_time.txt
+batch_rescore.py
+external_benchmark_codebase/
+vlmeval/dataset/mmsi_bench.py

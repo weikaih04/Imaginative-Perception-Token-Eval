@@ -60,8 +60,13 @@ def _extract_letter(pred, valid_letters=None):
     if m:
         return m.group(1).upper()
 
-    # 6. "A. text" or "A) text" at start — model outputs full option (e.g., "A. right")
-    m = re.match(r'\s*(' + pattern + r')[.\)]\s', pred, re.IGNORECASE)
+    # 6. "A. text" or "A) text" or "A: text" at start — model outputs full option (e.g., "A. right", "B: Left")
+    m = re.match(r'\s*(' + pattern + r')[.\):]\s', pred, re.IGNORECASE)
+    if m:
+        return m.group(1).upper()
+
+    # 6b. **X** or **X: text** — bold letter in reasoning (e.g., "The camera is rotating **C: Right**")
+    m = re.search(r'\*\*(' + pattern + r')(?:[:\s].*?)?\*\*', pred, re.IGNORECASE)
     if m:
         return m.group(1).upper()
 
@@ -197,7 +202,7 @@ class AI2ThorPathTracing(ImageMCQDataset):
 class AI2ThorPerspective_NoArrow(ImageMCQDataset):
     """
     AI2Thor Perspective QA Dataset (No Arrow version).
-    Source: weikaih/ai2thor-perspective-qa-800-balanced-val-v3
+    Source: weikaih/spatial-imaginative-token-pet-eval-ai2thor
     Uses marked_image_no_arrow and question_no_arrow.
     2-choice MCQ (A/B).
 
@@ -271,13 +276,13 @@ class AI2ThorPerspective_NoArrow(ImageMCQDataset):
 
     @classmethod
     def supported_datasets(cls):
-        return ['AI2ThorPerspective_NoArrow']
+        return ['PET_AI2Thor_SpatialImaginativeToken', 'AI2ThorPerspective_NoArrow']
 
     def load_data(self, dataset):
         from datasets import load_dataset
 
         # Load all splits from HuggingFace
-        hf_ds = load_dataset('weikaih/ai2thor-perspective-qa-800-balanced-val-v3')
+        hf_ds = load_dataset('weikaih/spatial-imaginative-token-pet-eval-ai2thor')
 
         records = []
         done = False
@@ -316,7 +321,7 @@ class AI2ThorPerspective_NoArrow(ImageMCQDataset):
 class AI2ThorPerspective_Arrow(ImageMCQDataset):
     """
     AI2Thor Perspective QA Dataset (With Arrow version).
-    Source: weikaih/ai2thor-perspective-qa-800-balanced-val-v3
+    Source: weikaih/spatial-imaginative-token-pet-eval-ai2thor
     Uses marked_image_with_arrow and question_with_arrow.
     2-choice MCQ (A/B).
 
@@ -387,7 +392,7 @@ class AI2ThorPerspective_Arrow(ImageMCQDataset):
         from datasets import load_dataset
 
         # Load all splits from HuggingFace
-        hf_ds = load_dataset('weikaih/ai2thor-perspective-qa-800-balanced-val-v3')
+        hf_ds = load_dataset('weikaih/spatial-imaginative-token-pet-eval-ai2thor')
 
         records = []
         global_idx = 0
@@ -943,7 +948,7 @@ class HabitatPerspective_NoArrow_HumanVerified(HabitatPerspective_NoArrow):
 
     @classmethod
     def supported_datasets(cls):
-        return ['HabitatPerspective_NoArrow_HumanVerified']
+        return ['PET_Habitat_SpatialImaginativeToken', 'HabitatPerspective_NoArrow_HumanVerified']
 
     def load_data(self, dataset):
         import random
@@ -1014,7 +1019,7 @@ class AI2ThorMultiViewCounting_HumanVerified(AI2ThorMultiViewCounting):
 
     @classmethod
     def supported_datasets(cls):
-        return ['AI2ThorMultiViewCounting_HumanVerified']
+        return ['MVC_AI2Thor_SpatialImaginativeToken', 'AI2ThorMultiViewCounting_HumanVerified']
 
     def load_data(self, dataset):
         from datasets import load_dataset
@@ -1205,7 +1210,7 @@ class MessyTableCounting_200(MessyTableCounting):
 
     @classmethod
     def supported_datasets(cls):
-        return ['MessyTableCounting_200']
+        return ['MVC_MessyTable_SpatialImaginativeToken', 'MessyTableCounting_200']
 
     def load_data(self, dataset):
         import random as rng_module
@@ -1262,6 +1267,96 @@ class MessyTableCounting_10(MessyTableCounting):
     @classmethod
     def supported_datasets(cls):
         return ['MessyTableCounting_10']
+
+
+class ScanNetCounting_200(ImageMCQDataset):
+    """
+    ScanNet Counting Evaluation Dataset.
+    Random 200-sample subset of leo66666/scannet_counting (train split, seed=42).
+    Multi-image input (5-8 views per sample).
+    4-choice MCQ (A/B/C/D) with integer answer choices.
+    """
+
+    TYPE = 'MCQ'
+    NUM_SAMPLES = 200
+
+    def __init__(self, dataset='ScanNetCounting_200', **kwargs):
+        super().__init__(dataset=dataset, **kwargs)
+
+    @classmethod
+    def supported_datasets(cls):
+        return ['MVC_ScanNet_SpatialImaginativeToken', 'ScanNetCounting_200']
+
+    def load_data(self, dataset):
+        import random as rng_module
+        from datasets import load_dataset
+
+        hf_ds = load_dataset('leo66666/scannet_counting', split='train')
+
+        all_indices = list(range(len(hf_ds)))
+        rng_module.seed(42)
+        sampled_indices = sorted(rng_module.sample(all_indices, min(self.NUM_SAMPLES, len(all_indices))))
+
+        records = []
+        for idx in sampled_indices:
+            ex = hf_ds[idx]
+            gt_str = ex['gt_answer']
+            question = ex['question'].strip()
+            images = ex['images']
+
+            if not images or gt_str is None or not question:
+                continue
+
+            try:
+                gt = int(gt_str)
+            except (ValueError, TypeError):
+                continue
+
+            rng = rng_module.Random(42 + idx)
+            pool = [x for x in range(max(1, gt - 3), min(8, gt + 3) + 1) if x != gt]
+            if len(pool) < 3:
+                pool = [x for x in range(1, 9) if x != gt]
+            distractors = rng.sample(pool, 3)
+            options = distractors + [gt]
+            rng.shuffle(options)
+            correct_letter = 'ABCD'[options.index(gt)]
+
+            img_b64_list = [pil_to_base64(img) for img in images]
+
+            records.append({
+                'index': len(records),
+                'image': img_b64_list,
+                'question': question,
+                'A': str(options[0]),
+                'B': str(options[1]),
+                'C': str(options[2]),
+                'D': str(options[3]),
+                'answer': correct_letter,
+            })
+
+        return pd.DataFrame(records)
+
+    def evaluate(self, eval_file, **judge_kwargs):
+        import numpy as np
+        from ..smp import load, dump
+
+        suffix = eval_file.split('.')[-1]
+        result_file = eval_file.replace(f'.{suffix}', f'_result.{suffix}')
+
+        data = load(eval_file)
+
+        if 'hit' not in data.columns:
+            for i in range(len(data)):
+                item = data.iloc[i]
+                pred = str(item.get('prediction', ''))
+                gt = str(item.get('answer', ''))
+                hit = _score_mcq_prediction(pred, gt, item)
+                data.loc[data.index[i], 'hit'] = hit
+            dump(data, result_file)
+
+        overall_acc = data['hit'].mean() * 100
+        res = {'Category': ['Overall'], 'Accuracy': [overall_acc], 'Count': [len(data)]}
+        return pd.DataFrame(res)
 
 
 class AI2ThorPathTracing2Point(ImageMCQDataset):
@@ -1627,6 +1722,125 @@ class RealPathTracing(AI2ThorPathTracing2Point):
                 'C': choices[2] if len(choices) > 2 else '',
                 'D': choices[3] if len(choices) > 3 else '',
                 'answer': ex['answer'],
+            })
+
+        return pd.DataFrame(records)
+
+
+# ========== VCoT Prefill (GT Thought) Dataset Variants ==========
+
+class AI2ThorPerspective_NoArrow_vcot_prefill(AI2ThorPerspective_NoArrow):
+    """PET with GT thought image (new_perspective) for vcot_prefill evaluation."""
+
+    def __init__(self, dataset='AI2ThorPerspective_NoArrow_vcot_prefill', **kwargs):
+        super().__init__(dataset=dataset, **kwargs)
+
+    @classmethod
+    def supported_datasets(cls):
+        return ['AI2ThorPerspective_NoArrow_vcot_prefill']
+
+    def load_data(self, dataset):
+        from datasets import load_dataset
+
+        hf_ds = load_dataset('weikaih/spatial-imaginative-token-pet-eval-ai2thor')
+
+        records = []
+        done = False
+        for split_name in hf_ds.keys():
+            if done:
+                break
+            for ex in hf_ds[split_name]:
+                if self.nsamples is not None and len(records) >= self.nsamples:
+                    done = True
+                    break
+
+                img_b64 = pil_to_base64(ex['marked_image_no_arrow'])
+
+                choices_raw = ex['answer_choices']
+                if isinstance(choices_raw, str):
+                    choices = json.loads(choices_raw)
+                else:
+                    choices = choices_raw
+
+                gt_thought_b64 = pil_to_base64(ex['new_perspective']) if ex.get('new_perspective') else ''
+
+                records.append({
+                    'index': len(records),
+                    'image': img_b64,
+                    'question': ex['question_no_arrow'],
+                    'A': choices[0] if len(choices) > 0 else '',
+                    'B': choices[1] if len(choices) > 1 else '',
+                    'answer': ex['answer'],
+                    'category': split_name,
+                    'gt_thought_image': gt_thought_b64,
+                    'gt_thought_desc': 'Visualizing the scene from the new perspective.',
+                })
+
+        return pd.DataFrame(records)
+
+
+class AI2ThorMultiViewCounting_HumanVerified_vcot_prefill(AI2ThorMultiViewCounting_HumanVerified):
+    """MVC HumanVerified with GT thought image (topdown_map) for vcot_prefill evaluation."""
+
+    def __init__(self, dataset='AI2ThorMultiViewCounting_HumanVerified_vcot_prefill', **kwargs):
+        super().__init__(dataset=dataset, **kwargs)
+
+    @classmethod
+    def supported_datasets(cls):
+        return ['AI2ThorMultiViewCounting_HumanVerified_vcot_prefill']
+
+    def load_data(self, dataset):
+        from datasets import load_dataset
+        import re
+
+        hf_ds = load_dataset('MahtabBg/multiview_eval', split='train')
+
+        records = []
+        for idx, ex in enumerate(hf_ds):
+            if self.nsamples is not None and len(records) >= self.nsamples:
+                break
+
+            movement = ex.get('movement_type', '')
+            if self.TRAJECTORY_FILTER is not None:
+                if self.TRAJECTORY_FILTER not in movement.lower():
+                    continue
+
+            frames = []
+            for i in range(8):
+                frame = ex.get(f'frame_{i}')
+                if frame is not None:
+                    frames.append(frame)
+
+            if len(frames) == 0:
+                continue
+
+            img_b64_list = [pil_to_base64(f) for f in frames]
+
+            question = ex['question']
+
+            choices = ['', '', '', '']
+            choice_pattern = r'([A-D])\)\s*(\d+)'
+            matches = re.findall(choice_pattern, question)
+            for letter, value in matches:
+                idx_choice = ord(letter) - ord('A')
+                if 0 <= idx_choice < 4:
+                    choices[idx_choice] = value
+
+            gt_thought_b64 = pil_to_base64(ex['topdown_map']) if ex.get('topdown_map') else ''
+
+            records.append({
+                'index': len(records),
+                'image': img_b64_list,
+                'question': question,
+                'A': choices[0],
+                'B': choices[1],
+                'C': choices[2],
+                'D': choices[3],
+                'answer': ex['answer'],
+                'category': movement,
+                'query_object': ex.get('query_object', ''),
+                'gt_thought_image': gt_thought_b64,
+                'gt_thought_desc': 'Use the top-down map to reason.',
             })
 
         return pd.DataFrame(records)

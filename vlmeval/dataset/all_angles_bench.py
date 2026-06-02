@@ -167,7 +167,7 @@ class AllAnglesBench_EgoHumans(AllAnglesBenchDataset):
 
     @classmethod
     def supported_datasets(cls):
-        return ['AllAnglesBench_EgoHumans']
+        return ['AllAngles_SpatialImaginativeToken', 'AllAnglesBench_EgoHumans']
 
 
 class AllAnglesBench_Full(AllAnglesBenchDataset):

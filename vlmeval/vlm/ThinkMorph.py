@@ -213,9 +213,9 @@ class ThinkMorph(BaseModel):
 
 
     def use_custom_prompt(self, dataset):
-        """Use custom prompt for SAT perspective taking dataset.
-        Disabled in answer-only mode (think=False) to avoid conflicting instructions.
-        """
+        """Use custom prompt for SAT perspective taking and vcot_prefill datasets."""
+        if dataset is not None and 'vcot_prefill' in str(dataset):
+            return True
         if self.understanding_output and not self.think:
             return False
         if dataset is not None and 'SAT_perspective' in dataset:
@@ -223,9 +223,68 @@ class ThinkMorph(BaseModel):
         return False
 
     def build_prompt(self, line, dataset=None):
-        """Build custom prompt for SAT perspective taking dataset."""
+        """Build custom prompt for SAT perspective taking and vcot_prefill datasets."""
         import string
         import pandas as pd
+
+        # Handle vcot_prefill: extract GT thought data, build standard prompt
+        if dataset is not None and 'vcot_prefill' in dataset:
+            import io
+            import base64
+            import re as _re
+
+            # Extract GT thought data for later use in generate_inner
+            gt_img_b64 = line.get('gt_thought_image', '')
+            gt_desc = line.get('gt_thought_desc', '')
+            if gt_img_b64:
+                gt_pil = Image.open(io.BytesIO(base64.b64decode(gt_img_b64))).convert('RGB')
+                self._gt_prefill = {'image': gt_pil, 'desc': gt_desc}
+            else:
+                self._gt_prefill = None
+
+            # Build standard prompt (same interleaving logic as dataset's build_prompt)
+            tgt_path = self.dump_image(line, dataset)
+            if not isinstance(tgt_path, list):
+                tgt_path = [tgt_path]
+
+            question = line['question']
+
+            options = {
+                cand: line[cand]
+                for cand in string.ascii_uppercase
+                if cand in line and not pd.isna(line[cand])
+            }
+            options_prompt = ''
+            if len(options):
+                options_prompt = 'Options:\n'
+                for key, item in options.items():
+                    options_prompt += f'{key}. {item}\n'
+                options_prompt += 'Please select the correct answer from the options above. \n'
+
+            # Handle <image_N> tags in question text if present (PT style),
+            # otherwise prepend all images before text (PET/MVC style)
+            msgs = []
+            if _re.search(r'<image_\d+>', question):
+                parts = _re.split(r'(<image_\d+>)', question)
+                for part in parts:
+                    m = _re.match(r'<image_(\d+)>', part)
+                    if m:
+                        img_idx = int(m.group(1)) - 1
+                        if img_idx < len(tgt_path):
+                            msgs.append(dict(type='image', value=tgt_path[img_idx]))
+                    else:
+                        text = part.strip()
+                        if text:
+                            msgs.append(dict(type='text', value=text))
+            else:
+                for p in tgt_path:
+                    msgs.append(dict(type='image', value=p))
+                msgs.append(dict(type='text', value=question))
+
+            if options_prompt:
+                msgs.append(dict(type='text', value=options_prompt))
+
+            return msgs
 
         if not self.use_custom_prompt(dataset):
             return None
@@ -233,26 +292,21 @@ class ThinkMorph(BaseModel):
         tgt_path = self.dump_image(line, dataset)
         question = line['question']
 
-        # Build prompt for SAT perspective taking
-        # Get options
         options = {
             cand: line[cand]
             for cand in string.ascii_uppercase
             if cand in line and not pd.isna(line[cand])
         }
 
-        # Build options prompt
         options_prompt = 'Options:\n'
         for key, item in options.items():
             options_prompt += f'{key}. {item}\n'
 
-        # Add special instruction for perspective taking - guide model to generate image directly
         prompt = f'Question: {question}\n'
         if len(options):
             prompt += options_prompt
         prompt += '\nThis is a spatial perspective question. You MUST generate a thinking image to visualize the scene from the new viewpoint. Do NOT write any text at all - only generate the image using <image_start> </image_end> tags, then immediately provide your answer in <answer></answer> tags. No text thinking allowed.\n'
 
-        # Build message
         msgs = []
         if isinstance(tgt_path, list):
             msgs.extend([dict(type='image', value=p) for p in tgt_path])
@@ -298,13 +352,20 @@ class ThinkMorph(BaseModel):
     def generate_inner(self, message, dataset=None, sample_index=None):
         input_list = self.build_thinkmorph_input(message)
 
+        # Extract gt_prefill if set by build_prompt (for vcot_prefill datasets)
+        gt_prefill = getattr(self, '_gt_prefill', None)
+        if gt_prefill is not None:
+            self._gt_prefill = None  # Clear after use
+
         if self.understanding_output:
             output_dict = self.inferencer(input_list=input_list, think=self.think,
-                                        understanding_output=True, vae_input=self.vae_input, **self.inference_hyper)
+                                        understanding_output=True, vae_input=self.vae_input,
+                                        gt_prefill=gt_prefill, **self.inference_hyper)
             final_output = output_dict[0]
 
         else:
-            output_list = self.inferencer(input_list=input_list, think=self.think, **self.inference_hyper)
+            output_list = self.inferencer(input_list=input_list, think=self.think,
+                                         gt_prefill=gt_prefill, **self.inference_hyper)
             results = []
             text_round = 0
 

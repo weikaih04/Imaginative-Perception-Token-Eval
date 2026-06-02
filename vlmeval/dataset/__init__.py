@@ -58,26 +58,15 @@ from .gobench import GOBenchDataset
 from .sfebench import SFE
 from .visfactor import VisFactor
 from .ai2thor_spatial import (
-    AI2ThorPathTracing, AI2ThorPerspective_NoArrow, AI2ThorPerspective_Arrow,
-    AI2ThorMultiViewCounting, AI2ThorMultiViewCounting_Square, AI2ThorMultiViewCounting_Rotation,
-    AI2ThorMultiViewCounting_10, AI2ThorMultiViewCounting_Square_10, AI2ThorMultiViewCounting_Rotation_10,
+    AI2ThorPerspective_NoArrow,
     AI2ThorMultiViewCounting_HumanVerified,
-    AI2ThorMultiViewCounting_HumanVerified_MultiCamera,
-    AI2ThorMultiViewCounting_HumanVerified_Rotation,
-    AI2ThorMultiViewCounting_HumanVerified_10,
-    HabitatPerspective_NoArrow, HabitatPerspective_Arrow,
-    HabitatPerspective_NoArrow_10, HabitatPerspective_Arrow_10,
-    HabitatPerspective_NoArrow_v2,
     HabitatPerspective_NoArrow_HumanVerified,
-    HabitatPerspective_NoArrow_HumanVerified_10,
-    MessyTableCounting, MessyTableCounting_200, MessyTableCounting_10,
-    AI2ThorPathTracing2Point,
-    AI2ThorPathTracing2PointV2,
-    RealPathTracing,
+    MessyTableCounting_200,
+    ScanNetCounting_200,
 )
-from .sat_circular_limited import SATCircularLimited, SATPerspectiveTaking
-from .mindcube import MindCubeDataset, MindCube_Tiny_200
-from .all_angles_bench import AllAnglesBenchDataset, AllAnglesBench_EgoHumans, AllAnglesBench_Full
+from .sat_circular_limited import SATPerspectiveTaking
+from .mindcube import MindCube_Tiny_200
+from .all_angles_bench import AllAnglesBench_EgoHumans
 from .ost_bench import OSTDataset
 from .videommmu import VideoMMMU
 from .vsibench import VSIBench
@@ -252,25 +241,14 @@ IMAGE_DATASET = [
     MedqbenchPairedDescriptionDataset, MedqbenchCaptionDataset, ChartMuseum, ChartQAPro, ReasonMap_Plus,
     olmOCRBench, OceanOCRBench, MATBench, VLRMBench, RefCOCODataset, SimpleVQA, HiPhODataset, MaCBench,
     UniSVG, SArena_MINI,
-    AI2ThorPathTracing, AI2ThorPerspective_NoArrow, AI2ThorPerspective_Arrow,
-    AI2ThorMultiViewCounting, AI2ThorMultiViewCounting_Square, AI2ThorMultiViewCounting_Rotation,
-    AI2ThorMultiViewCounting_10, AI2ThorMultiViewCounting_Square_10, AI2ThorMultiViewCounting_Rotation_10,
+    AI2ThorPerspective_NoArrow,
     AI2ThorMultiViewCounting_HumanVerified,
-    AI2ThorMultiViewCounting_HumanVerified_MultiCamera,
-    AI2ThorMultiViewCounting_HumanVerified_Rotation,
-    AI2ThorMultiViewCounting_HumanVerified_10,
-    HabitatPerspective_NoArrow, HabitatPerspective_Arrow,
-    HabitatPerspective_NoArrow_10, HabitatPerspective_Arrow_10,
-    HabitatPerspective_NoArrow_v2,
     HabitatPerspective_NoArrow_HumanVerified,
-    HabitatPerspective_NoArrow_HumanVerified_10,
-    SATCircularLimited, SATPerspectiveTaking,
-    MindCubeDataset, MindCube_Tiny_200,
-    AllAnglesBenchDataset, AllAnglesBench_EgoHumans, AllAnglesBench_Full,
-    MessyTableCounting, MessyTableCounting_200, MessyTableCounting_10,
-    AI2ThorPathTracing2Point,
-    AI2ThorPathTracing2PointV2,
-    RealPathTracing,
+    SATPerspectiveTaking,
+    MindCube_Tiny_200,
+    AllAnglesBench_EgoHumans,
+    MessyTableCounting_200,
+    ScanNetCounting_200,
 ]
 
 VIDEO_DATASET = [

@@ -206,25 +206,15 @@ dream_1k_dataset = {
     'DREAM-1K_0.5fps': partial(DREAM, dataset='DREAM-1K', fps=0.5),
 }
 
-# AI2Thor spatial reasoning datasets with sample limits
-ai2thor_dataset = {
-    'AI2ThorPathTracing_10': partial(AI2ThorPathTracing, dataset='AI2ThorPathTracing', nsamples=10),
-    'AI2ThorPerspective_NoArrow_10': partial(AI2ThorPerspective_NoArrow, dataset='AI2ThorPerspective_NoArrow', nsamples=10),
-    # Path Tracing 2-Point V2 (debiased)
-    'AI2ThorPT2PV2_td_ego_dir': partial(AI2ThorPathTracing2PointV2, dataset='AI2ThorPT2PV2_td_ego_dir', subset='td_ego_dir', use_sideview=False),
-    'AI2ThorPT2PV2_td_path': partial(AI2ThorPathTracing2PointV2, dataset='AI2ThorPT2PV2_td_path', subset='td_path', use_sideview=False),
-    'AI2ThorPT2PV2_td_path_arrow': partial(AI2ThorPathTracing2PointV2, dataset='AI2ThorPT2PV2_td_path_arrow', subset='td_path_arrow', use_sideview=False),
-    # Real Indoor Path Tracing
-    'RealPT_td_path': partial(RealPathTracing, dataset='RealPT_td_path', subset='td_path'),
-    'RealPT_td_path_arrow': partial(RealPathTracing, dataset='RealPT_td_path_arrow', subset='td_path_arrow'),
-}
+# AI2Thor spatial reasoning datasets with sample limits.
+# Path-Tracing (PT) and dev/quick-test sample-limited variants are de-registered
+# for the public release; their class code remains in ai2thor_spatial.py.
+ai2thor_dataset = {}
 
-# SAT Circular dataset with sample limits
-from .sat_circular_limited import SATCircularLimited, SATPerspectiveTaking
-sat_circular_dataset = {
-    'SAT_circular_10': partial(SATCircularLimited, dataset='SAT_circular', nsamples=10),
-    'SAT_perspective_10': partial(SATPerspectiveTaking, dataset='SAT_perspective', nsamples=10),
-}
+# SAT Circular dataset with sample limits.
+# Quick-test sample-limited variants are de-registered for the public release.
+from .sat_circular_limited import SATPerspectiveTaking
+sat_circular_dataset = {}
 
 supported_video_datasets = {}
 
