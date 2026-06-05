@@ -7,7 +7,7 @@ benchmarks used in the paper across three tasks — **Perspective Taking (PET)**
 **Multiview Counting (MVC)** — plus their cross-domain transfer benchmarks.
 
 <p align="center">
-  <a href="https://huggingface.co/collections/weikaih/spatial-imaginative-token-mvc-pet-datasets-6a15f80e0fcef43bd0c50aba">
+  <a href="https://huggingface.co/collections/weikaih/spatial-imaginative-token-mvc-pet-pt-datasets-6a15f80e0fcef43bd0c50aba">
     <img src="https://img.shields.io/badge/IPT-Datasets-yellow?logo=huggingface&logoColor=yellow" alt="IPT Datasets"/>
   </a>
   <a href="https://github.com/weikaih04/Spatial-Imaginative-Token">
@@ -19,7 +19,7 @@ benchmarks used in the paper across three tasks — **Perspective Taking (PET)**
 
 ## 📊 Benchmarks
 
-All evaluation datasets are in the [🤗 collection](https://huggingface.co/collections/weikaih/spatial-imaginative-token-mvc-pet-datasets-6a15f80e0fcef43bd0c50aba).
+All evaluation datasets are in the [🤗 collection](https://huggingface.co/collections/weikaih/spatial-imaginative-token-mvc-pet-pt-datasets-6a15f80e0fcef43bd0c50aba).
 Pass the unified `--data` name to `run.py`:
 
 | Task | `--data` name | Setting | n |
