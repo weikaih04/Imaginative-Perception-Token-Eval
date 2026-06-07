@@ -27,7 +27,7 @@ Pass the unified `--data` name to `run.py`:
 
 | Task | `--data` name | Setting | n |
 |------|---------------|---------|---|
-| **PET** | `PET_AI2Thor_ImaginativePerceptionToken`   | AI2-THOR (in-domain) | 278 |
+| **PET** | `PET_AI2Thor_ImaginativePerceptionToken`   | AI2-THOR (in-domain, human-verified) | 278 |
 | **PET** | `PET_Habitat_ImaginativePerceptionToken`   | Habitat (different env, human-verified) | 300 |
 | **PET** | `PET_SAT_ImaginativePerceptionToken`       | SAT perspective (cross-domain transfer) | 66 |
 | **MVC** | `MVC_AI2Thor_ImaginativePerceptionToken`   | AI2-THOR (in-domain, human-verified) | 260 |
@@ -36,8 +36,11 @@ Pass the unified `--data` name to `run.py`:
 | **Other spatial** | `MindCube_ImaginativePerceptionToken`  | MindCube (transfer) | 200 |
 | **Other spatial** | `AllAngles_ImaginativePerceptionToken` | All-Angles EgoHumans (transfer) | 170 |
 
+> Our own eval sets — AI2-THOR (in-domain), Habitat / Real (different env) — are all **human-verified**.
+> SAT, MessyTable, ScanNet, MindCube, and All-Angles are external transfer benchmarks.
+>
 > **Path Tracing (PT)** benchmarks will be added under the same naming convention
-> (`PT_AI2Thor_ImaginativePerceptionToken`, `PT_Real_ImaginativePerceptionToken`).
+> (`PT_AI2Thor_ImaginativePerceptionToken`, `PT_Real_ImaginativePerceptionToken`), also human-verified.
 
 ---
 
