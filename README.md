@@ -1,4 +1,4 @@
-# 🧭 Imaginative Perception Token — Evaluation
+# Imaginative Perception Token — Evaluation
 
 Evaluation toolkit for the **Imaginative Perception Token (IPT)** paper, built on
 [VLMEvalKit](https://github.com/open-compass/VLMEvalKit) and the
@@ -17,9 +17,9 @@ benchmarks used in the paper across three tasks — **Perspective Taking (PET)**
 
 ---
 
-## 📊 Benchmarks
+## Benchmarks
 
-All evaluation datasets are in the [🤗 collection](https://huggingface.co/collections/weikaih/imaginative-perception-token-mvc-pet-pt-datasets-6a15f80e0fcef43bd0c50aba).
+All evaluation datasets are in the [collection](https://huggingface.co/collections/weikaih/imaginative-perception-token-mvc-pet-pt-datasets-6a15f80e0fcef43bd0c50aba).
 Pass the unified `--data` name to `run.py`:
 
 | Task | `--data` name | Setting | n |
@@ -38,7 +38,7 @@ Pass the unified `--data` name to `run.py`:
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Install
 
@@ -89,7 +89,7 @@ python run.py \
 ---
 
 <details>
-<summary><b>📚 Built on ThinkMorph / VLMEvalKit (click to expand)</b></summary>
+<summary><b> Built on ThinkMorph / VLMEvalKit (click to expand)</b></summary>
 
 This repository is forked from the [ThinkMorph](https://github.com/ThinkMorph/ThinkMorph) eval stack
 ([VLMEvalKit_Thinkmorph](https://github.com/hychaochao/VLMEvalKit_Thinkmorph)), itself based on
