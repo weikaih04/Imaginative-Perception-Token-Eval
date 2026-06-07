@@ -7,6 +7,9 @@ benchmarks used in the paper across three tasks — **Perspective Taking (PET)**
 **Multiview Counting (MVC)** — plus their cross-domain transfer benchmarks.
 
 <p align="center">
+  <a href="https://arxiv.org/abs/2606.03988">
+    <img src="https://img.shields.io/badge/arXiv-2606.03988-b31b1b?logo=arxiv&logoColor=white" alt="arXiv"/>
+  </a>
   <a href="https://huggingface.co/collections/weikaih/imaginative-perception-token-mvc-pet-pt-datasets-6a15f80e0fcef43bd0c50aba">
     <img src="https://img.shields.io/badge/IPT-Datasets-yellow?logo=huggingface&logoColor=yellow" alt="IPT Datasets"/>
   </a>
