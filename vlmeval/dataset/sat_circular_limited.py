@@ -104,7 +104,7 @@ class SATPerspectiveTaking(ImageMCQDataset):
 
     @classmethod
     def supported_datasets(cls):
-        return ['PET_SAT_SpatialImaginativeToken']
+        return ['PET_SAT_ImaginativePerceptionToken']
 
     def evaluate(self, eval_file, **judge_kwargs):
         return _sat_rule_based_evaluate(eval_file)

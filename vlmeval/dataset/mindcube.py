@@ -227,7 +227,7 @@ class MindCube_Tiny_200(MindCubeDataset):
 
     @classmethod
     def supported_datasets(cls):
-        return ['MindCube_SpatialImaginativeToken', 'MindCube_Tiny_200']
+        return ['MindCube_ImaginativePerceptionToken', 'MindCube_Tiny_200']
 
     def load_data(self, dataset):
         """Load balanced 200-sample subset."""

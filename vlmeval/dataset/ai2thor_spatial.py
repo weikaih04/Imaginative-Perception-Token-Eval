@@ -202,7 +202,7 @@ class AI2ThorPathTracing(ImageMCQDataset):
 class AI2ThorPerspective_NoArrow(ImageMCQDataset):
     """
     AI2Thor Perspective QA Dataset (No Arrow version).
-    Source: weikaih/spatial-imaginative-token-pet-eval-ai2thor
+    Source: weikaih/imaginative-perception-token-pet-eval-ai2thor
     Uses marked_image_no_arrow and question_no_arrow.
     2-choice MCQ (A/B).
 
@@ -276,13 +276,13 @@ class AI2ThorPerspective_NoArrow(ImageMCQDataset):
 
     @classmethod
     def supported_datasets(cls):
-        return ['PET_AI2Thor_SpatialImaginativeToken', 'AI2ThorPerspective_NoArrow']
+        return ['PET_AI2Thor_ImaginativePerceptionToken', 'AI2ThorPerspective_NoArrow']
 
     def load_data(self, dataset):
         from datasets import load_dataset
 
         # Load all splits from HuggingFace
-        hf_ds = load_dataset('weikaih/spatial-imaginative-token-pet-eval-ai2thor')
+        hf_ds = load_dataset('weikaih/imaginative-perception-token-pet-eval-ai2thor')
 
         records = []
         done = False
@@ -321,7 +321,7 @@ class AI2ThorPerspective_NoArrow(ImageMCQDataset):
 class AI2ThorPerspective_Arrow(ImageMCQDataset):
     """
     AI2Thor Perspective QA Dataset (With Arrow version).
-    Source: weikaih/spatial-imaginative-token-pet-eval-ai2thor
+    Source: weikaih/imaginative-perception-token-pet-eval-ai2thor
     Uses marked_image_with_arrow and question_with_arrow.
     2-choice MCQ (A/B).
 
@@ -392,7 +392,7 @@ class AI2ThorPerspective_Arrow(ImageMCQDataset):
         from datasets import load_dataset
 
         # Load all splits from HuggingFace
-        hf_ds = load_dataset('weikaih/spatial-imaginative-token-pet-eval-ai2thor')
+        hf_ds = load_dataset('weikaih/imaginative-perception-token-pet-eval-ai2thor')
 
         records = []
         global_idx = 0
@@ -948,7 +948,7 @@ class HabitatPerspective_NoArrow_HumanVerified(HabitatPerspective_NoArrow):
 
     @classmethod
     def supported_datasets(cls):
-        return ['PET_Habitat_SpatialImaginativeToken', 'HabitatPerspective_NoArrow_HumanVerified']
+        return ['PET_Habitat_ImaginativePerceptionToken', 'HabitatPerspective_NoArrow_HumanVerified']
 
     def load_data(self, dataset):
         import random
@@ -1019,7 +1019,7 @@ class AI2ThorMultiViewCounting_HumanVerified(AI2ThorMultiViewCounting):
 
     @classmethod
     def supported_datasets(cls):
-        return ['MVC_AI2Thor_SpatialImaginativeToken', 'AI2ThorMultiViewCounting_HumanVerified']
+        return ['MVC_AI2Thor_ImaginativePerceptionToken', 'AI2ThorMultiViewCounting_HumanVerified']
 
     def load_data(self, dataset):
         from datasets import load_dataset
@@ -1210,7 +1210,7 @@ class MessyTableCounting_200(MessyTableCounting):
 
     @classmethod
     def supported_datasets(cls):
-        return ['MVC_MessyTable_SpatialImaginativeToken', 'MessyTableCounting_200']
+        return ['MVC_MessyTable_ImaginativePerceptionToken', 'MessyTableCounting_200']
 
     def load_data(self, dataset):
         import random as rng_module
@@ -1285,7 +1285,7 @@ class ScanNetCounting_200(ImageMCQDataset):
 
     @classmethod
     def supported_datasets(cls):
-        return ['MVC_ScanNet_SpatialImaginativeToken', 'ScanNetCounting_200']
+        return ['MVC_ScanNet_ImaginativePerceptionToken', 'ScanNetCounting_200']
 
     def load_data(self, dataset):
         import random as rng_module
@@ -1742,7 +1742,7 @@ class AI2ThorPerspective_NoArrow_vcot_prefill(AI2ThorPerspective_NoArrow):
     def load_data(self, dataset):
         from datasets import load_dataset
 
-        hf_ds = load_dataset('weikaih/spatial-imaginative-token-pet-eval-ai2thor')
+        hf_ds = load_dataset('weikaih/imaginative-perception-token-pet-eval-ai2thor')
 
         records = []
         done = False

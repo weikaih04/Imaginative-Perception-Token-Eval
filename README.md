@@ -1,13 +1,13 @@
-# 🧭 Spatial Imaginative Token — Evaluation
+# 🧭 Imaginative Perception Token — Evaluation
 
-Evaluation toolkit for the **Spatial Imaginative Token (IPT)** paper, built on
+Evaluation toolkit for the **Imaginative Perception Token (IPT)** paper, built on
 [VLMEvalKit](https://github.com/open-compass/VLMEvalKit) and the
 [ThinkMorph](https://github.com/ThinkMorph/ThinkMorph) eval stack. It adds the spatial-reasoning
 benchmarks used in the paper across three tasks — **Perspective Taking (PET)** and
 **Multiview Counting (MVC)** — plus their cross-domain transfer benchmarks.
 
 <p align="center">
-  <a href="https://huggingface.co/collections/weikaih/spatial-imaginative-token-mvc-pet-pt-datasets-6a15f80e0fcef43bd0c50aba">
+  <a href="https://huggingface.co/collections/weikaih/imaginative-perception-token-mvc-pet-pt-datasets-6a15f80e0fcef43bd0c50aba">
     <img src="https://img.shields.io/badge/IPT-Datasets-yellow?logo=huggingface&logoColor=yellow" alt="IPT Datasets"/>
   </a>
   <a href="https://github.com/weikaih04/Spatial-Imaginative-Token">
@@ -19,22 +19,22 @@ benchmarks used in the paper across three tasks — **Perspective Taking (PET)**
 
 ## 📊 Benchmarks
 
-All evaluation datasets are in the [🤗 collection](https://huggingface.co/collections/weikaih/spatial-imaginative-token-mvc-pet-pt-datasets-6a15f80e0fcef43bd0c50aba).
+All evaluation datasets are in the [🤗 collection](https://huggingface.co/collections/weikaih/imaginative-perception-token-mvc-pet-pt-datasets-6a15f80e0fcef43bd0c50aba).
 Pass the unified `--data` name to `run.py`:
 
 | Task | `--data` name | Setting | n |
 |------|---------------|---------|---|
-| **PET** | `PET_AI2Thor_SpatialImaginativeToken`   | AI2-THOR (in-domain) | 278 |
-| **PET** | `PET_Habitat_SpatialImaginativeToken`   | Habitat (different env, human-verified) | 300 |
-| **PET** | `PET_SAT_SpatialImaginativeToken`       | SAT perspective (cross-domain transfer) | 66 |
-| **MVC** | `MVC_AI2Thor_SpatialImaginativeToken`   | AI2-THOR (in-domain, human-verified) | 260 |
-| **MVC** | `MVC_ScanNet_SpatialImaginativeToken`   | ScanNet (different env) | 200 |
-| **MVC** | `MVC_MessyTable_SpatialImaginativeToken`| MessyTable (cross-domain transfer) | 200 |
-| **Other spatial** | `MindCube_SpatialImaginativeToken`  | MindCube (transfer) | 200 |
-| **Other spatial** | `AllAngles_SpatialImaginativeToken` | All-Angles EgoHumans (transfer) | 170 |
+| **PET** | `PET_AI2Thor_ImaginativePerceptionToken`   | AI2-THOR (in-domain) | 278 |
+| **PET** | `PET_Habitat_ImaginativePerceptionToken`   | Habitat (different env, human-verified) | 300 |
+| **PET** | `PET_SAT_ImaginativePerceptionToken`       | SAT perspective (cross-domain transfer) | 66 |
+| **MVC** | `MVC_AI2Thor_ImaginativePerceptionToken`   | AI2-THOR (in-domain, human-verified) | 260 |
+| **MVC** | `MVC_ScanNet_ImaginativePerceptionToken`   | ScanNet (different env) | 200 |
+| **MVC** | `MVC_MessyTable_ImaginativePerceptionToken`| MessyTable (cross-domain transfer) | 200 |
+| **Other spatial** | `MindCube_ImaginativePerceptionToken`  | MindCube (transfer) | 200 |
+| **Other spatial** | `AllAngles_ImaginativePerceptionToken` | All-Angles EgoHumans (transfer) | 170 |
 
 > **Path Tracing (PT)** benchmarks will be added under the same naming convention
-> (`PT_AI2Thor_SpatialImaginativeToken`, `PT_Real_SpatialImaginativeToken`).
+> (`PT_AI2Thor_ImaginativePerceptionToken`, `PT_Real_ImaginativePerceptionToken`).
 
 ---
 
@@ -78,9 +78,9 @@ A ready-to-use script is in [`run_spatial.sh`](run_spatial.sh) (set `OPENAI_API_
 export OPENAI_API_KEY="your_api_key_here"
 
 python run.py \
-  --data PET_AI2Thor_SpatialImaginativeToken PET_Habitat_SpatialImaginativeToken PET_SAT_SpatialImaginativeToken \
-         MVC_AI2Thor_SpatialImaginativeToken MVC_ScanNet_SpatialImaginativeToken MVC_MessyTable_SpatialImaginativeToken \
-         MindCube_SpatialImaginativeToken AllAngles_SpatialImaginativeToken \
+  --data PET_AI2Thor_ImaginativePerceptionToken PET_Habitat_ImaginativePerceptionToken PET_SAT_ImaginativePerceptionToken \
+         MVC_AI2Thor_ImaginativePerceptionToken MVC_ScanNet_ImaginativePerceptionToken MVC_MessyTable_ImaginativePerceptionToken \
+         MindCube_ImaginativePerceptionToken AllAngles_ImaginativePerceptionToken \
   --model thinkmorph \
   --judge gpt-5 \
   --work-dir ./results

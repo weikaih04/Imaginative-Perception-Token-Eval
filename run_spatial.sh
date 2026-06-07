@@ -5,7 +5,7 @@
 export OPENAI_API_KEY=
 
 python run.py \
-  --data PET_AI2Thor_SpatialImaginativeToken PET_Habitat_SpatialImaginativeToken PET_SAT_SpatialImaginativeToken MVC_AI2Thor_SpatialImaginativeToken MVC_ScanNet_SpatialImaginativeToken MVC_MessyTable_SpatialImaginativeToken MindCube_SpatialImaginativeToken AllAngles_SpatialImaginativeToken \
+  --data PET_AI2Thor_ImaginativePerceptionToken PET_Habitat_ImaginativePerceptionToken PET_SAT_ImaginativePerceptionToken MVC_AI2Thor_ImaginativePerceptionToken MVC_ScanNet_ImaginativePerceptionToken MVC_MessyTable_ImaginativePerceptionToken MindCube_ImaginativePerceptionToken AllAngles_ImaginativePerceptionToken \
   --model thinkmorph \
   --judge gpt-5 \
   --work-dir ./results
