@@ -10,7 +10,7 @@ benchmarks used in the paper across three tasks — **Perspective Taking (PET)**
   <a href="https://huggingface.co/collections/weikaih/imaginative-perception-token-mvc-pet-pt-datasets-6a15f80e0fcef43bd0c50aba">
     <img src="https://img.shields.io/badge/IPT-Datasets-yellow?logo=huggingface&logoColor=yellow" alt="IPT Datasets"/>
   </a>
-  <a href="https://github.com/weikaih04/Spatial-Imaginative-Token">
+  <a href="https://github.com/weikaih04/Imaginative-Perception-Token">
     <img src="https://img.shields.io/badge/IPT-Training-blue?logo=github&logoColor=white" alt="IPT Training"/>
   </a>
 </p>
@@ -43,13 +43,13 @@ Pass the unified `--data` name to `run.py`:
 ### 1. Install
 
 ```bash
-git clone https://github.com/weikaih04/SpatialReasoning_Eval.git
+git clone https://github.com/weikaih04/Imaginative-Perception-Token-Eval.git
 cd SpatialReasoning_Eval
 pip install -r requirements.txt
 ```
 
 You also need the ThinkMorph / BAGEL model dependencies installed (same environment used to
-run the [training repo](https://github.com/weikaih04/Spatial-Imaginative-Token)).
+run the [training repo](https://github.com/weikaih04/Imaginative-Perception-Token)).
 
 ### 2. Configure the model
 
