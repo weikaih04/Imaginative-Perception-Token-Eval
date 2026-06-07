@@ -924,7 +924,7 @@ class HabitatPerspective_NoArrow_v2(HabitatPerspective_NoArrow):
 class HabitatPerspective_NoArrow_HumanVerified(HabitatPerspective_NoArrow):
     """
     Habitat Perspective QA Dataset - Human Verified (No Arrow version).
-    Source: MahtabBg/habitat_perspective_eval
+    Source: weikaih/imaginative-perception-token-pet-eval-habitat
     300 human-verified samples (50 per category, downsampled from 719 total).
     Uses marked_image_no_arrow and question_no_arrow.
     2-choice MCQ (A/B).
@@ -954,7 +954,7 @@ class HabitatPerspective_NoArrow_HumanVerified(HabitatPerspective_NoArrow):
         import random
         from datasets import load_dataset
 
-        hf_ds = load_dataset('MahtabBg/habitat_perspective_eval')
+        hf_ds = load_dataset('weikaih/imaginative-perception-token-pet-eval-habitat')
 
         records = []
         for split_name in sorted(hf_ds.keys()):
@@ -1002,7 +1002,7 @@ class HabitatPerspective_NoArrow_HumanVerified_10(HabitatPerspective_NoArrow_Hum
 class AI2ThorMultiViewCounting_HumanVerified(AI2ThorMultiViewCounting):
     """
     AI2Thor Multi-View Counting Dataset (Human Verified Subset).
-    Source: MahtabBg/multiview_eval
+    Source: weikaih/imaginative-perception-token-mvc-eval-ai2thor
     260 human-verified samples, multi-image input (4-8 frames per sample).
     4-choice MCQ (A/B/C/D).
 
@@ -1025,7 +1025,7 @@ class AI2ThorMultiViewCounting_HumanVerified(AI2ThorMultiViewCounting):
         from datasets import load_dataset
         import re
 
-        hf_ds = load_dataset('MahtabBg/multiview_eval', split='train')
+        hf_ds = load_dataset('weikaih/imaginative-perception-token-mvc-eval-ai2thor', split='train')
 
         records = []
         for idx, ex in enumerate(hf_ds):
@@ -1793,7 +1793,7 @@ class AI2ThorMultiViewCounting_HumanVerified_vcot_prefill(AI2ThorMultiViewCounti
         from datasets import load_dataset
         import re
 
-        hf_ds = load_dataset('MahtabBg/multiview_eval', split='train')
+        hf_ds = load_dataset('weikaih/imaginative-perception-token-mvc-eval-ai2thor', split='train')
 
         records = []
         for idx, ex in enumerate(hf_ds):
