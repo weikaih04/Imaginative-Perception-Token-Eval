@@ -22,7 +22,7 @@ benchmarks used in the paper across three tasks — **Perspective Taking (PET)**
 
 ## Benchmarks
 
-All evaluation datasets are in the [collection](https://huggingface.co/collections/weikaih/imaginative-perception-token-data-6a15f80e0fcef43bd0c50aba).
+All evaluation datasets are in the [benchmark collection](https://huggingface.co/collections/weikaih/imaginative-perception-token-benchmark-6a258507ed8b6eeac42f1d02).
 Pass the unified `--data` name to `run.py`:
 
 | Task | `--data` name | Setting | n |
