@@ -50,7 +50,7 @@ Pass the unified `--data` name to `run.py`:
 
 ```bash
 git clone https://github.com/weikaih04/Imaginative-Perception-Token-Eval.git
-cd SpatialReasoning_Eval
+cd Imaginative-Perception-Token-Eval
 pip install -r requirements.txt
 ```
 
