@@ -10,7 +10,7 @@ benchmarks used in the paper across three tasks — **Perspective Taking (PET)**
   <a href="https://arxiv.org/abs/2606.03988">
     <img src="https://img.shields.io/badge/arXiv-2606.03988-b31b1b?logo=arxiv&logoColor=white" alt="arXiv"/>
   </a>
-  <a href="https://huggingface.co/collections/weikaih/imaginative-perception-token-mvc-pet-pt-datasets-6a15f80e0fcef43bd0c50aba">
+  <a href="https://huggingface.co/collections/weikaih/imaginative-perception-token-data-6a15f80e0fcef43bd0c50aba">
     <img src="https://img.shields.io/badge/IPT-Datasets-yellow?logo=huggingface&logoColor=yellow" alt="IPT Datasets"/>
   </a>
   <a href="https://github.com/weikaih04/Imaginative-Perception-Token">
@@ -22,7 +22,7 @@ benchmarks used in the paper across three tasks — **Perspective Taking (PET)**
 
 ## Benchmarks
 
-All evaluation datasets are in the [collection](https://huggingface.co/collections/weikaih/imaginative-perception-token-mvc-pet-pt-datasets-6a15f80e0fcef43bd0c50aba).
+All evaluation datasets are in the [collection](https://huggingface.co/collections/weikaih/imaginative-perception-token-data-6a15f80e0fcef43bd0c50aba).
 Pass the unified `--data` name to `run.py`:
 
 | Task | `--data` name | Setting | n |
