@@ -58,8 +58,10 @@ class AllAnglesBenchDataset(ImageMCQDataset):
 
     TYPE = 'MCQ'
 
-    # Data paths
-    DATA_DIR = '/weka/oe-training-default/jieyuz2/improve_segments/visual_cot/ThinkMorph_training/VLMEvalKit_Thinkmorph/external_benchmark_codebase/All-Angles-Bench/data'
+    # External benchmark — download All-Angles-Bench separately
+    # (https://github.com/Chenyu-Wang567/All-Angles-Bench) and point this at your
+    # local copy via the ALLANGLES_DATA_DIR env var.
+    DATA_DIR = os.environ.get('ALLANGLES_DATA_DIR', './data/All-Angles-Bench')
     DATA_FILE = 'egohumans_only.json'  # Default to EgoHumans subset
 
     def __init__(self, dataset='AllAnglesBench_EgoHumans', **kwargs):

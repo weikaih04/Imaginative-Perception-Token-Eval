@@ -35,8 +35,18 @@ Pass the unified `--data` name to `run.py`:
 | **Other spatial** | `MindCube_ImaginativePerceptionToken`  | MindCube (transfer) | 200 |
 | **Other spatial** | `AllAngles_ImaginativePerceptionToken` | All-Angles EgoHumans (transfer) | 170 |
 
-> Our own eval sets — AI2-THOR (in-domain), Habitat / Real (different env) — are all **human-verified**.
-> SAT, MessyTable, ScanNet, MindCube, and All-Angles are external transfer benchmarks.
+> Our own eval sets — AI2-THOR (in-domain), Habitat / Real (different env) — are all **human-verified**
+> and load automatically from HuggingFace. SAT / MessyTable / ScanNet also load from public HuggingFace repos.
+>
+> **MindCube** and **All-Angles** are external transfer benchmarks that must be downloaded from their
+> source repos ([MindCube](https://github.com/mll-lab-nu/MindCube),
+> [All-Angles-Bench](https://github.com/Chenyu-Wang567/All-Angles-Bench)). Point the eval at your local
+> copies via env vars (defaults: `./data/MindCube`, `./data/All-Angles-Bench`):
+>
+> ```bash
+> export MINDCUBE_DATA_DIR=/path/to/MindCube/data
+> export ALLANGLES_DATA_DIR=/path/to/All-Angles-Bench/data
+> ```
 >
 > **Path Tracing (PT)** benchmarks will be added under the same naming convention
 > (`PT_AI2Thor_ImaginativePerceptionToken`, `PT_Real_ImaginativePerceptionToken`), also human-verified.

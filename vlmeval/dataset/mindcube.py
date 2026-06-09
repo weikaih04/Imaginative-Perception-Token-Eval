@@ -91,10 +91,12 @@ class MindCubeDataset(ImageMCQDataset):
 
     TYPE = 'MCQ'
 
-    # Data path
-    DATA_PATH = '/weka/oe-training-default/jieyuz2/improve_segments/visual_cot/ThinkMorph_training/VLMEvalKit_Thinkmorph/external_benchmark_codebase/MindCube/data/data/raw/MindCube_tinybench.jsonl'
+    # External benchmark — download MindCube separately (https://github.com/mll-lab-nu/MindCube)
+    # and point these at your local copy via env vars.
+    MINDCUBE_DIR = os.environ.get('MINDCUBE_DATA_DIR', './data/MindCube')
+    DATA_PATH = os.path.join(MINDCUBE_DIR, 'raw', 'MindCube_tinybench.jsonl')
     # Image base directory
-    IMAGE_BASE_DIR = '/weka/oe-training-default/jieyuz2/improve_segments/visual_cot/ThinkMorph_training/VLMEvalKit_Thinkmorph/external_benchmark_codebase/MindCube/data/data'
+    IMAGE_BASE_DIR = MINDCUBE_DIR
 
     # Settings to include in overall metrics (translation excluded per original codebase)
     SETTINGS_IN_OVERALL = {'among', 'around', 'rotation'}
